@@ -200,6 +200,15 @@ export function reviseLeave(leave, note) {
 }
 export function recordDeparture(leave, actual) {
   if (!authorized(leave) || leave.approval !== 'Approved' || movementFor(leave)?.departedAt) return
+  if (
+    store.movements.some(
+      (movement) =>
+        movement.employeeId === leave.employeeId && movement.departedAt && !movement.returnedAt
+    )
+  ) {
+    toast('This employee is already away. Record their return before another departure.', 'error')
+    return
+  }
   const recordedLate = actual.slice(0, 10) < today()
   store.movements.push({
     id: `M${Date.now()}`,

@@ -233,6 +233,25 @@ test('Future leave preserves an active absence and approved balances cannot be r
   app.approveLeave(pending)
   assert.equal(app.employeeFor(pending.employeeId).remainingBalance, balance)
 })
+test('An employee cannot depart twice before their current return is recorded', () => {
+  const active = store.leaves.find((l) => l.status === 'On Leave')
+  app.saveLeave({
+    employeeId: active.employeeId,
+    type: 'Sick Leave',
+    start: dates.addDays(active.end, 10),
+    end: dates.addDays(active.end, 12),
+  })
+  const next = store.leaves[0]
+  const movementCount = store.movements.length
+  const historyCount = store.history.length
+  app.recordDeparture(next, dates.localDateTime())
+  assert.equal(store.movements.length, movementCount, 'A second active departure must be rejected')
+  assert.equal(store.history.length, historyCount, 'A rejected departure must not write history')
+  assert.equal(next.status, 'Scheduled')
+  app.recordReturn(active, dates.localDateTime())
+  app.recordDeparture(next, dates.localDateTime())
+  assert.equal(store.movements.length, movementCount + 1)
+})
 const sfc = require('@vue/compiler-sfc')
 const sourceRoot = path.resolve(__dirname, '../src')
 const vueFiles = [

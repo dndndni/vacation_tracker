@@ -233,6 +233,18 @@ async function main() {
   )
   console.log('PASS AWOL confirmation syncs status')
   await route('reports')
+  await select('Report status', 'Overdue')
+  await select('Report type', 'Staffing')
+  const staffingWithPreviousStatus = await evaluate("document.querySelectorAll('tbody tr').length")
+  await select('Report type', 'Leave Summary')
+  await select('Report status', '')
+  await select('Report type', 'Staffing')
+  assert.equal(
+    await evaluate("document.querySelectorAll('tbody tr').length"),
+    staffingWithPreviousStatus,
+    'Staffing must ignore the hidden leave-status filter'
+  )
+  console.log('PASS Staffing report ignores hidden leave filters')
   await select('Report type', 'Extensions')
   assert(await evaluate("document.querySelectorAll('tbody tr').length > 0"))
   await clickText('PDF')

@@ -77,9 +77,6 @@ const rows = computed(() => {
           }
         })
       )
-      .filter(
-        (r) => !status.value || (status.value === 'Overdue' ? r.status === 'Below minimum' : true)
-      )
   }
   if (report.value === 'Employee History')
     return store.history
