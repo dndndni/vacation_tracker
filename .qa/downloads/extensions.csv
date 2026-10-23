@@ -1,0 +1,6 @@
+﻿"id","employee","farm","type","start","end","days","status","original","requested","approval"
+"L0001","Maria Santos","Farm 1","Annual Leave","2026-10-20","2026-11-06","16","Extended","2026-11-03","2026-11-06","Approved"
+"L0004","Rafael Santos","Farm 1","Annual Leave","2026-10-21","2026-11-03","12","On Leave","2026-11-03","2026-11-06","Pending"
+"L0005","Isabel Santos","Farm 1","Annual Leave","2026-10-21","2026-11-03","12","On Leave","2026-11-03","2026-11-06","Pending"
+"L0046","Joy Ramos","Farm 4","Annual Leave","2026-10-19","2026-11-01","12","Extended","2026-10-28","2026-11-01","Approved"
+"L0085","Miguel Flores","Farm 8","Sick Leave","2026-10-20","2026-11-01","11","Extended","2026-10-28","2026-11-01","Approved"
